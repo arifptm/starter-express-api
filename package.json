@@ -1,7 +1,7 @@
-{
+lik{
   "name": "starter-express-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Metalika",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
