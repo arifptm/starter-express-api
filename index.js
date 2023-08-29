@@ -2,6 +2,13 @@ const express = require('express')
 const fetch = require('node-fetch')
 const app = express()
 const cheerio = require('cheerio')
+
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3()
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json())
+
 app.all('/', async (req, res) => {
 try{
 
@@ -42,7 +49,21 @@ try{
     
 		//fs.writeFileSync('/home/goried/public_html/makkah.txt', result[0].data, 'utf-8');
 		//fs.writeFileSync('/home/goried/public_html/madina.txt', result[1].data, 'utf-8');
-		return res.send(result)
+
+
+		let fileMakkah = 'makkah'
+		// let fileMadina = 'madina'
+	
+		await s3.putObject({
+			Body: "bodyne",
+			Bucket: process.env.BUCKET,
+			Key: fileMakkah,
+		}).promise()
+	
+		res.set('Content-type', 'text/plain')
+		return res.send('ok').end()
+
+		// return res.send(result)
 	} catch(err){
 		return ({ error: err})
 	}
